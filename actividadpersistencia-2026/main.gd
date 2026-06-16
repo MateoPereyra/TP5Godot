@@ -25,6 +25,7 @@ func save_game(version: int):
 			"Version" : version,
 			"Score" : %FrogIdle.currentScore
 			}
+			%SaveText.text = "Guardado archivo de versión 1"
 		3:
 			game_data = {
 			"BGM" : %BGM.stream_paused,
@@ -34,6 +35,7 @@ func save_game(version: int):
 			"pos_y" : %FrogIdle.position.y,
 			"SFX" : %FrogIdle.sfx_enabled
 			}
+			%SaveText.text = "Guardado archivo de versión 3"
 	
 	save_file.store_string(JSON.stringify(game_data))
 
@@ -47,14 +49,15 @@ func load_game_v1():
 	var save_version = int(game_data.get("Version"))
 
 	if save_version != 1:
-		print("ERROR: guardado incompatible con versión actual")
+		%SaveText.text = "ERROR: guardado incompatible con versión actual"
 		return
 
 	%BGM.stream_paused = game_data["BGM"]
+	%BGMButton.button_pressed = %BGM.stream_paused
 	%FrogIdle.currentScore = game_data["Score"]
 	%Score.text = "SCORE: %d" % [int(%FrogIdle.currentScore)]
 	
-	print("Versión cargada:", save_version)
+	%SaveText.text = "Versión cargada: " + str(save_version)
 
 func load_game_v3():
 	if not FileAccess.file_exists(save_path):
@@ -83,5 +86,12 @@ func load_game_v3():
 			%FrogIdle.target = Vector2(game_data["pos_x"],game_data["pos_y"]) #para evitar que vuelva a pos previa
 			%FrogIdle.sfx_enabled = game_data["SFX"]
 	
+	%BGMButton.button_pressed = %BGM.stream_paused
+	%SFXButton.button_pressed = not %FrogIdle.sfx_enabled
 	%Score.text = "SCORE: %d" % [int(%FrogIdle.currentScore)]
-	print("Versión cargada:", save_version)
+	%SaveText.text = "Versión cargada: " + str(save_version)
+
+
+func _on_clear_pressed() -> void:
+	if FileAccess.file_exists(save_path):
+		var err = DirAccess.remove_absolute(ProjectSettings.globalize_path(save_path))

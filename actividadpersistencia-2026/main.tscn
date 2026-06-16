@@ -95,8 +95,10 @@ layout_mode = 2
 
 [node name="SaveText" type="Label" parent="HBoxContainer/SavePanel/VBoxContainer/ScrollContainer" unique_id=329299411]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "SAVE DATA TEXT CONTENT"
+autowrap_mode = 3
 
 [node name="HSeparator" type="HSeparator" parent="HBoxContainer/SavePanel/VBoxContainer" unique_id=742768106]
 layout_mode = 2
@@ -188,5 +190,6 @@ autoplay = true
 [connection signal="pressed" from="HBoxContainer/SavePanel/VBoxContainer/HBoxContainer/VBoxContainer/Load01" to="." method="_on_load_01_pressed"]
 [connection signal="pressed" from="HBoxContainer/SavePanel/VBoxContainer/HBoxContainer/VBoxContainer2/Save03" to="." method="_on_save_03_pressed"]
 [connection signal="pressed" from="HBoxContainer/SavePanel/VBoxContainer/HBoxContainer/VBoxContainer2/Load03" to="." method="_on_load_03_pressed"]
+[connection signal="pressed" from="HBoxContainer/SavePanel/VBoxContainer/Clear" to="." method="_on_clear_pressed"]
 [connection signal="toggled" from="HBoxContainer/GamePanel/HBoxContainer/SFXButton" to="Game/FrogIdle" method="_on_sfx_button_toggled"]
 [connection signal="toggled" from="HBoxContainer/GamePanel/HBoxContainer/BGMButton" to="Game/FrogIdle" method="_on_bgm_button_toggled"]
